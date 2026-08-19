@@ -26,12 +26,12 @@ export default function CTA() {
               onClick={() => setContactOpen(true)}
               className="group inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-4 font-semibold text-lg"
             >
-              <span>hi@hiiipe.com</span>
+              <span>info@hiiipe.com</span>
               <span className="w-9 h-9 rounded-full bg-primary-foreground text-primary flex items-center justify-center group-hover:rotate-45 transition-transform">
                 <ArrowIcon />
               </span>
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={() => setCallOpen(true)}
               className="group inline-flex items-center gap-3 rounded-full border border-border px-7 py-4 font-semibold text-lg hover:border-primary hover:bg-secondary transition-colors"
@@ -40,7 +40,7 @@ export default function CTA() {
               <span className="w-9 h-9 rounded-full border border-border flex items-center justify-center group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <ArrowIcon />
               </span>
-            </button>
+            </button> */}
           </div>
           <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 pt-10 border-t border-border">
             {[

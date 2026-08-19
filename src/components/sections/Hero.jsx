@@ -126,9 +126,6 @@ export default function Hero() {
                 </span>
               </div>
               <div className="absolute bottom-6 left-6 right-6">
-                <p className="font-mono text-xs text-(--muted-foreground) mb-2">
-                  // tagline
-                </p>
                 <p className="font-display text-2xl leading-tight">
                   We paint pixels
                   <br />

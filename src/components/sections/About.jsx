@@ -26,13 +26,7 @@ export default function About() {
             <p className="text-lg text-muted-foreground leading-relaxed">
               No decks. No filler. Just work you'll be caught staring at.
             </p>
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  Founded
-                </p>
-                <p className="font-display text-3xl mt-1">2026</p>
-              </div>
+            <div className="pt-4 border-t border-border">
               <div>
                 <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
                   Studio

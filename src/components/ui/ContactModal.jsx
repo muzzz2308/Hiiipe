@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { toast } from "sonner";
 import ArrowIcon from "./ArrowIcon";
 import FancySelect from "./FancySelect";
-import { isEmailJsConfigured, sendContactEmail } from "../../lib/emailjs";
+import { isContactFormConfigured, sendContactEmail } from "../../lib/contactForm";
 
 const services = [
   "Brand Identity",
@@ -12,22 +12,12 @@ const services = [
   "Something else",
 ];
 
-const budgets = [
-  "Under $5k",
-  "$5k – $15k",
-  "$15k – $40k",
-  "$40k+",
-  "Not sure yet",
-];
-
 const empty = {
   name: "",
   email: "",
   company: "",
   service: "",
-  budget: "",
   message: "",
-  website: "",
 };
 
 const fieldClass =
@@ -77,7 +67,7 @@ export default function ContactModal({ open, onClose }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (form.website) return;
+    const honeypot = e.currentTarget.elements.namedItem("_gotcha")?.value ?? "";
 
     setSubmitting(true);
     try {
@@ -86,8 +76,8 @@ export default function ContactModal({ open, onClose }) {
         email: form.email,
         company: form.company,
         service: form.service,
-        budget: form.budget,
         message: form.message,
+        honeypot,
       });
       toast.success("Message sent — we'll get back within 24 hours.");
       requestClose();
@@ -134,7 +124,7 @@ export default function ContactModal({ open, onClose }) {
             >
               Write us at
               <br />
-              <span className="text-primary">hi@hiiipe.com</span>
+              <span className="text-primary">info@hiiipe.com</span>
             </h2>
           </div>
           <button
@@ -147,9 +137,9 @@ export default function ContactModal({ open, onClose }) {
           </button>
         </div>
 
-        {!isEmailJsConfigured && (
+        {!isContactFormConfigured && (
           <p className="mb-4 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-primary/90">
-            Form is ready. Add EmailJS keys to{" "}
+            Form is ready. Add your Web3Forms access key to{" "}
             <code className="font-mono">.env</code> to start delivering mail.
           </p>
         )}
@@ -157,12 +147,11 @@ export default function ContactModal({ open, onClose }) {
         <form onSubmit={onSubmit} className="space-y-4">
           <input
             type="text"
-            name="website"
-            value={form.website}
-            onChange={set("website")}
+            name="_gotcha"
             tabIndex={-1}
             autoComplete="off"
-            className="absolute -left-[9999px] opacity-0 h-0 w-0"
+            defaultValue=""
+            className="absolute -left-[9999px] opacity-0 h-0 w-0 pointer-events-none"
             aria-hidden
           />
 
@@ -214,15 +203,6 @@ export default function ContactModal({ open, onClose }) {
               onChange={(service) => setForm((f) => ({ ...f, service }))}
             />
           </div>
-
-          <FancySelect
-            label="Budget"
-            value={form.budget}
-            options={budgets}
-            placeholder="Select a range"
-            placement="top"
-            onChange={(budget) => setForm((f) => ({ ...f, budget }))}
-          />
 
           <label className="block space-y-2">
             <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">

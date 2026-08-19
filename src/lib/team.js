@@ -22,7 +22,7 @@ const team = [
       { name: "Volt Configurator", year: "2024", tag: "3D" },
       { name: "Nomi Web App", year: "2024", tag: "Product" },
     ],
-    contact: { email: "murtaza@hiiipe.com", handle: "@murtazahumayun" },
+    contact: { email: "dev@hiiipe.com", handle: "@murtazahumayun" },
   },
   {
     slug: "abdullah-zeeshan",
@@ -47,7 +47,7 @@ const team = [
       { name: "Field Notes Reel", year: "2024", tag: "3D" },
       { name: "Ora Product Loop", year: "2023", tag: "Loop" },
     ],
-    contact: { email: "abdullah@hiiipe.com", handle: "@abdullahzee" },
+    contact: { email: "core@hiiipe.com", handle: "@abdullahzee" },
   },
   {
     slug: "muhammad-asad",
@@ -72,7 +72,7 @@ const team = [
       { name: "Volt Tagline System", year: "2024", tag: "Naming" },
       { name: "Field Notes Vol. II", year: "2023", tag: "Editorial" },
     ],
-    contact: { email: "asad@hiiipe.com", handle: "@asadwarrior" },
+    contact: { email: "ops@hiiipe.com", handle: "@asadwarrior" },
   },
 ];
 export default team;

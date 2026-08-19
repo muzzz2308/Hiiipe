@@ -76,7 +76,7 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
       <PortfolioNav name={member.name} />
-      <Hero member={member} />
+      <Hero member={member} team={team} />
       <Bio member={member} />
       <Skills member={member} />
       <Toolkit member={member} />
@@ -141,7 +141,7 @@ function PortfolioNav({ name }) {
     </header>
   );
 }
-function Hero({ member }) {
+function Hero({ member, team }) {
   // Break role into words and distribute around the portrait
   const roleWords = member.role.split(/\s+/).filter((w) => w !== "&");
   const orbit = member.orbit;
