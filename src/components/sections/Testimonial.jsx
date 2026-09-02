@@ -162,34 +162,40 @@ export default function Testimonial() {
           </div>
 
           <div className="mt-10 flex items-center justify-between md:mt-12">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1" role="tablist" aria-label="Testimonial slides">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === active}
                   onClick={() => goTo(i)}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  className={`relative h-2 rounded-full transition-all duration-300 ${
-                    i === active
-                      ? "w-10 bg-primary"
-                      : "w-2 bg-border hover:bg-primary/50"
-                  }`}
+                  aria-label={`Go to testimonial ${i + 1} of ${testimonials.length}`}
+                  className="relative flex h-11 min-w-11 items-center justify-center px-2"
                 >
-                  {i === active && (
-                    <span className="absolute inset-0 animate-pulse rounded-full bg-primary/30" />
-                  )}
+                  <span
+                    className={`block rounded-full transition-all duration-300 ${
+                      i === active
+                        ? "h-2 w-10 bg-primary"
+                        : "h-2 w-2 bg-border hover:bg-primary/50"
+                    }`}
+                  />
                 </button>
               ))}
             </div>
 
             <div className="flex items-center gap-3">
               <button
+                type="button"
                 onClick={() => goTo(active - 1)}
+                aria-label="Previous testimonial"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
               >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
                   className="h-5 w-5 rotate-180"
+                  aria-hidden="true"
                 >
                   <path
                     d="M5 12h14M13 6l6 6-6 6"
@@ -201,10 +207,12 @@ export default function Testimonial() {
               </button>
 
               <button
+                type="button"
                 onClick={() => goTo(active + 1)}
+                aria-label="Next testimonial"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
               >
-                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
                   <path
                     d="M5 12h14M13 6l6 6-6 6"
                     stroke="currentColor"

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getMemberBySlug, getTeam } from "../lib/api";
 import ArrowIcon from "../components/ui/ArrowIcon";
 import Logo from "../components/ui/Logo";
+import SEO from "../components/seo/SEO";
 import { DetailPageSkeleton } from "../components/ui/skeletons";
 
 export default function PortfolioPage() {
@@ -75,6 +76,13 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
+      <SEO
+        title={member.name}
+        description={`${member.name} — ${member.role} at HIIIPE. ${member.bio}`}
+        path={`/team/${member.slug}`}
+        image={member.photo}
+        type="profile"
+      />
       <PortfolioNav name={member.name} />
       <Hero member={member} team={team} />
       <Bio member={member} />

@@ -102,6 +102,7 @@ export default function FancySelect({
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-controls={listId}
+          aria-label={label || undefined}
           onClick={toggle}
           onKeyDown={onKeyDown}
           className={`group flex w-full items-center justify-between gap-3 rounded-xl border bg-background/60 px-4 py-3 text-left text-sm transition-all duration-200 ${

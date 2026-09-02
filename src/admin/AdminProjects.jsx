@@ -5,11 +5,15 @@ import { useConfirm } from "../components/ui/ConfirmDialog";
 import { AdminTableSkeleton } from "../components/ui/skeletons";
 import {
   AdminShell,
+  AdminTable,
+  btnPrimary,
   Field,
   ImageUpload,
   Modal,
   RowActions,
   inputClass,
+  tableHeadClass,
+  tableRowClass,
 } from "./ui";
 
 const empty = {
@@ -116,11 +120,7 @@ export default function AdminProjects() {
       title="Projects"
       subtitle="Masterpieces shown in Selected Work."
       actions={
-        <button
-          type="button"
-          onClick={openCreate}
-          className="rounded-lg bg-[#e8cb2f] text-[#111110] px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest font-semibold"
-        >
+        <button type="button" onClick={openCreate} className={btnPrimary}>
           New project
         </button>
       }
@@ -128,9 +128,9 @@ export default function AdminProjects() {
       {loading ? (
         <AdminTableSkeleton />
       ) : (
-      <div className="rounded-xl border border-white/10 overflow-hidden">
+      <AdminTable>
         <table className="w-full text-left text-sm">
-          <thead className="bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/40">
+          <thead className={tableHeadClass}>
             <tr>
               <th className="px-4 py-3">Project</th>
               <th className="px-4 py-3 hidden md:table-cell">Category</th>
@@ -141,24 +141,24 @@ export default function AdminProjects() {
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.id} className="border-t border-white/10">
+              <tr key={r.id} className={tableRowClass}>
                 <td className="px-4 py-3 flex items-center gap-3">
                   {r.img && (
                     <img
                       src={r.img}
                       alt=""
-                      className="h-12 w-16 rounded object-cover border border-white/10"
+                      className="h-12 w-16 rounded object-cover border border-border"
                     />
                   )}
                   <p className="font-medium">{r.title}</p>
                 </td>
-                <td className="px-4 py-3 hidden md:table-cell text-white/60">
+                <td className="px-4 py-3 hidden md:table-cell text-muted-foreground">
                   {r.cat}
                 </td>
-                <td className="px-4 py-3 hidden lg:table-cell text-white/40 font-mono text-[11px] truncate max-w-[180px]">
+                <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground font-mono text-[11px] truncate max-w-[180px]">
                   {r.url || "—"}
                 </td>
-                <td className="px-4 py-3 hidden sm:table-cell text-white/60">
+                <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground">
                   {r.year}
                 </td>
                 <td className="px-4 py-3">
@@ -171,14 +171,14 @@ export default function AdminProjects() {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-white/40">
+                <td colSpan={5} className="px-4 py-10 text-center text-muted-foreground">
                   No projects yet.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-      </div>
+      </AdminTable>
       )}
 
       {form && (

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import Logo from "../components/ui/Logo";
 import { useAuth } from "./AuthContext";
+import { btnPrimary, inputClass } from "./ui";
 
 export default function AdminLogin() {
   const { session, loading, configured, signIn } = useAuth();
@@ -33,61 +35,76 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0908] text-[#f7f6f1] flex items-center justify-center px-6">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-6 border border-white/10 rounded-2xl p-8 bg-[#12100e]"
-      >
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f] mb-2">
-            // studio access
-          </p>
-          <h1 className="font-display text-4xl">Sign in</h1>
-        </div>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <header className="h-[72px] flex items-center px-6 border-b border-border/60">
+        <Logo />
+      </header>
 
-        {!configured && (
-          <p className="text-sm text-red-300/90">
-            Supabase env vars are missing. Copy `.env.example` to `.env` and fill
-            in your project keys.
-          </p>
-        )}
-
-        <label className="block space-y-2">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
-            Email
-          </span>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg border border-white/15 bg-transparent px-3 py-2.5 text-sm focus:outline-none focus:border-[#e8cb2f]"
-          />
-        </label>
-
-        <label className="block space-y-2">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
-            Password
-          </span>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border border-white/15 bg-transparent px-3 py-2.5 text-sm focus:outline-none focus:border-[#e8cb2f]"
-          />
-        </label>
-
-        {error && <p className="text-sm text-red-300">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={submitting || !configured}
-          className="w-full rounded-lg bg-[#e8cb2f] text-[#0a0908] py-3 font-mono text-xs uppercase tracking-widest font-semibold disabled:opacity-50"
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+        <form
+          onSubmit={onSubmit}
+          className="w-full max-w-sm space-y-6 border border-border rounded-3xl p-8 bg-card/40"
         >
-          {submitting ? "Signing in…" : "Enter"}
-        </button>
-      </form>
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
+              HIIIPE Admin
+            </p>
+            <h1 className="text-2xl font-semibold tracking-tight">Sign in</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Manage site content and media.
+            </p>
+          </div>
+
+          {!configured && (
+            <p className="text-sm text-red-300/90 rounded-xl border border-red-400/20 bg-red-400/5 px-4 py-3">
+              Supabase env vars are missing. Copy `.env.example` to `.env.local` and
+              add your project keys.
+            </p>
+          )}
+
+          <label className="block space-y-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Email
+            </span>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={inputClass}
+            />
+          </label>
+
+          <label className="block space-y-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Password
+            </span>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={inputClass}
+            />
+          </label>
+
+          {error && <p className="text-sm text-red-300">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={submitting || !configured}
+            className={`w-full ${btnPrimary} py-3.5`}
+          >
+            {submitting ? "Signing in…" : "Sign in"}
+          </button>
+
+          <p className="text-center text-sm text-muted-foreground">
+            <Link to="/" className="hover:text-primary transition-colors">
+              ← Back to site
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }

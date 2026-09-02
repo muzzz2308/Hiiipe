@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPostBySlug, getPosts } from "../lib/api";
 import Logo from "../components/ui/Logo";
+import SEO from "../components/seo/SEO";
 import { DetailPageSkeleton } from "../components/ui/skeletons";
 
 export default function JournalDetail() {
@@ -105,6 +106,14 @@ export default function JournalDetail() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        path={`/journal/${post.slug}`}
+        image={post.img}
+        type="article"
+        keywords={post.tags}
+      />
       {/* Reading progress */}
       <div className="fixed top-0 left-0 right-0 h-0.75 bg-transparent z-60">
         <div

@@ -1,48 +1,82 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import viteCompression from "vite-plugin-compression";
 
-/** Merge Vercel/CI process.env with local .env files for client bundle. */
+const ENV_KEYS = [
+  "VITE_SUPABASE_URL",
+  "VITE_SUPABASE_ANON_KEY",
+  "VITE_WEB3FORMS_ACCESS_KEY",
+  "VITE_CONTACT_TO_EMAIL",
+];
+
+/** Merge Vercel/CI process.env with local .env / .env.local for the client bundle. */
 function clientEnv(mode) {
-  const fromFile = loadEnv(mode, process.cwd(), "VITE_");
-  return {
-    VITE_SUPABASE_URL:
-      process.env.VITE_SUPABASE_URL?.trim() ??
-      fromFile.VITE_SUPABASE_URL?.trim() ??
-      "",
-    VITE_SUPABASE_ANON_KEY:
-      process.env.VITE_SUPABASE_ANON_KEY?.trim() ??
-      fromFile.VITE_SUPABASE_ANON_KEY?.trim() ??
-      "",
-    VITE_WEB3FORMS_ACCESS_KEY:
-      process.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() ??
-      fromFile.VITE_WEB3FORMS_ACCESS_KEY?.trim() ??
-      "",
-    VITE_CONTACT_TO_EMAIL:
-      process.env.VITE_CONTACT_TO_EMAIL?.trim() ??
-      fromFile.VITE_CONTACT_TO_EMAIL?.trim() ??
-      "info@hiiipe.com",
-  };
+  const fromFile = loadEnv(mode, process.cwd(), "");
+  const env = {};
+
+  for (const key of ENV_KEYS) {
+    env[key] = process.env[key]?.trim() ?? fromFile[key]?.trim() ?? "";
+  }
+
+  if (!env.VITE_CONTACT_TO_EMAIL) {
+    env.VITE_CONTACT_TO_EMAIL = "info@hiiipe.com";
+  }
+
+  return env;
 }
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = clientEnv(mode);
+  const isProd = mode === "production";
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      isProd &&
+        viteCompression({
+          algorithm: "gzip",
+          ext: ".gz",
+          threshold: 1024,
+        }),
+      isProd &&
+        viteCompression({
+          algorithm: "brotliCompress",
+          ext: ".br",
+          threshold: 1024,
+        }),
+    ].filter(Boolean),
     envPrefix: "VITE_",
-    define: {
-      "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(env.VITE_SUPABASE_URL),
-      "import.meta.env.VITE_SUPABASE_ANON_KEY": JSON.stringify(
-        env.VITE_SUPABASE_ANON_KEY,
-      ),
-      "import.meta.env.VITE_WEB3FORMS_ACCESS_KEY": JSON.stringify(
-        env.VITE_WEB3FORMS_ACCESS_KEY,
-      ),
-      "import.meta.env.VITE_CONTACT_TO_EMAIL": JSON.stringify(
-        env.VITE_CONTACT_TO_EMAIL,
-      ),
+    define: Object.fromEntries(
+      ENV_KEYS.map((key) => [
+        `import.meta.env.${key}`,
+        JSON.stringify(env[key]),
+      ]),
+    ),
+    build: {
+      minify: "oxc",
+      cssMinify: true,
+      sourcemap: false,
+      reportCompressedSize: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return;
+            if (id.includes("@supabase")) return "supabase";
+            if (
+              id.includes("react-dom") ||
+              id.includes("react-router") ||
+              id.includes("/react/")
+            ) {
+              return "react-vendor";
+            }
+            if (id.includes("react-helmet")) return "helmet";
+            if (id.includes("sonner")) return "sonner";
+          },
+        },
+      },
     },
   };
 });

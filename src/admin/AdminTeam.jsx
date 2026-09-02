@@ -5,6 +5,8 @@ import { useConfirm } from "../components/ui/ConfirmDialog";
 import { AdminTableSkeleton } from "../components/ui/skeletons";
 import {
   AdminShell,
+  AdminTable,
+  btnPrimary,
   Field,
   ImageUpload,
   MemberProjectsEditor,
@@ -14,6 +16,8 @@ import {
   TagInput,
   inputClass,
   slugify,
+  tableHeadClass,
+  tableRowClass,
   textareaClass,
 } from "./ui";
 
@@ -157,11 +161,7 @@ export default function AdminTeam() {
       title="Team"
       subtitle="People shown on the Team section and portfolio pages."
       actions={
-        <button
-          type="button"
-          onClick={openCreate}
-          className="rounded-lg bg-[#e8cb2f] text-[#111110] px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest font-semibold"
-        >
+        <button type="button" onClick={openCreate} className={btnPrimary}>
           New member
         </button>
       }
@@ -169,9 +169,9 @@ export default function AdminTeam() {
       {loading ? (
         <AdminTableSkeleton />
       ) : (
-      <div className="rounded-xl border border-white/10 overflow-hidden">
+      <AdminTable>
         <table className="w-full text-left text-sm">
-          <thead className="bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/40">
+          <thead className={tableHeadClass}>
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3 hidden md:table-cell">Role</th>
@@ -180,21 +180,21 @@ export default function AdminTeam() {
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.id} className="border-t border-white/10">
+              <tr key={r.id} className={tableRowClass}>
                 <td className="px-4 py-3 flex items-center gap-3">
                   {r.photo && (
                     <img
                       src={r.photo}
                       alt=""
-                      className="h-10 w-10 rounded object-cover border border-white/10"
+                      className="h-10 w-10 rounded object-cover border border-border"
                     />
                   )}
                   <div>
                     <p className="font-medium">{r.name}</p>
-                    <p className="font-mono text-[10px] text-white/40">{r.slug}</p>
+                    <p className="font-mono text-[10px] text-muted-foreground">{r.slug}</p>
                   </div>
                 </td>
-                <td className="px-4 py-3 hidden md:table-cell text-white/60">
+                <td className="px-4 py-3 hidden md:table-cell text-muted-foreground">
                   {r.role}
                 </td>
                 <td className="px-4 py-3">
@@ -207,14 +207,14 @@ export default function AdminTeam() {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={3} className="px-4 py-10 text-center text-white/40">
+                <td colSpan={3} className="px-4 py-10 text-center text-muted-foreground">
                   No team members yet.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-      </div>
+      </AdminTable>
       )}
 
       {form && (

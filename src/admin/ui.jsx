@@ -1,26 +1,35 @@
 import { useRef, useState } from "react";
 import { uploadMedia } from "../lib/api";
 
+export const btnPrimary =
+  "inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+
+export const btnSecondary =
+  "inline-flex items-center justify-center rounded-full border border-border px-5 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground transition-colors disabled:opacity-50";
+
+export const btnDanger =
+  "inline-flex items-center justify-center rounded-full border border-red-400/30 px-4 py-2 text-xs font-medium text-red-300 hover:border-red-300 transition-colors";
+
+export const inputClass =
+  "w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors";
+
+export const textareaClass = `${inputClass} min-h-28 resize-y`;
+
 export function Field({ label, hint, children }) {
   return (
     <div className="block space-y-2">
       <div className="flex items-baseline justify-between gap-3">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
           {label}
         </span>
         {hint && (
-          <span className="font-mono text-[10px] text-white/25">{hint}</span>
+          <span className="font-mono text-[10px] text-muted-foreground/70">{hint}</span>
         )}
       </div>
       {children}
     </div>
   );
 }
-
-export const inputClass =
-  "w-full rounded-lg border border-white/15 bg-white/[0.03] px-3 py-2.5 text-sm text-[#f7f6f1] placeholder:text-white/25 focus:outline-none focus:border-[#e8cb2f]/70";
-
-export const textareaClass = `${inputClass} min-h-28`;
 
 export function ImageUpload({ label, value, folder, onChange }) {
   const [uploading, setUploading] = useState(false);
@@ -53,7 +62,7 @@ export function ImageUpload({ label, value, folder, onChange }) {
 
   return (
     <div className="space-y-2">
-      <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </span>
       <div
@@ -69,8 +78,8 @@ export function ImageUpload({ label, value, folder, onChange }) {
         }}
         className={`relative overflow-hidden rounded-xl border border-dashed transition-colors ${
           dragOver
-            ? "border-[#e8cb2f] bg-[#e8cb2f]/10"
-            : "border-white/15 bg-white/[0.02]"
+            ? "border-primary bg-primary/10"
+            : "border-border bg-background/40"
         }`}
       >
         {value ? (
@@ -81,18 +90,10 @@ export function ImageUpload({ label, value, folder, onChange }) {
               className="h-48 w-full object-cover"
             />
             <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => inputRef.current?.click()}
-                className="rounded-lg bg-[#e8cb2f] text-[#111110] px-3 py-2 font-mono text-[10px] uppercase tracking-widest font-semibold"
-              >
+              <button type="button" onClick={() => inputRef.current?.click()} className={btnPrimary}>
                 Replace
               </button>
-              <button
-                type="button"
-                onClick={() => onChange("")}
-                className="rounded-lg border border-white/30 px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-white"
-              >
+              <button type="button" onClick={() => onChange("")} className={btnSecondary}>
                 Remove
               </button>
             </div>
@@ -104,15 +105,15 @@ export function ImageUpload({ label, value, folder, onChange }) {
             disabled={uploading}
             className="flex w-full flex-col items-center justify-center gap-3 px-6 py-12 text-center"
           >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-[#e8cb2f]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-border text-primary">
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M12 5v14M5 12h14" strokeLinecap="round" />
               </svg>
             </span>
-            <span className="font-mono text-[11px] uppercase tracking-widest text-white/70">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
               {uploading ? "Uploading…" : "Drop image or click to upload"}
             </span>
-            <span className="text-xs text-white/35">PNG, JPG, WEBP</span>
+            <span className="text-xs text-muted-foreground/70">PNG, JPG, WEBP</span>
           </button>
         )}
         <input
@@ -144,18 +145,18 @@ export function TagInput({ label, value = [], onChange, placeholder = "Add item 
 
   return (
     <Field label={label}>
-      <div className="rounded-lg border border-white/15 bg-white/[0.03] px-3 py-2.5 min-h-12">
+      <div className="rounded-xl border border-border bg-background/40 px-4 py-3 min-h-12">
         <div className="flex flex-wrap gap-2 mb-2">
           {value.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-2 rounded-full bg-[#e8cb2f]/15 text-[#e8cb2f] px-3 py-1 font-mono text-[10px] uppercase tracking-widest"
+              className="inline-flex items-center gap-2 rounded-full bg-primary/10 text-primary px-3 py-1 font-mono text-[10px] uppercase tracking-widest"
             >
               {tag}
               <button
                 type="button"
                 onClick={() => onChange(value.filter((t) => t !== tag))}
-                className="text-[#e8cb2f]/70 hover:text-[#e8cb2f]"
+                className="text-primary/70 hover:text-primary"
                 aria-label={`Remove ${tag}`}
               >
                 ×
@@ -174,7 +175,7 @@ export function TagInput({ label, value = [], onChange, placeholder = "Add item 
           }}
           onBlur={add}
           placeholder={placeholder}
-          className="w-full bg-transparent text-sm placeholder:text-white/25 focus:outline-none"
+          className="w-full bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none"
         />
       </div>
     </Field>
@@ -210,10 +211,10 @@ export function ContentBlocksEditor({ value = [], onChange }) {
         {value.map((block, index) => (
           <div
             key={index}
-            className="rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-3"
+            className="rounded-xl border border-border bg-card/30 p-4 space-y-3"
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f]">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
                 {block.type === "p"
                   ? "Paragraph"
                   : block.type === "h2"
@@ -223,8 +224,8 @@ export function ContentBlocksEditor({ value = [], onChange }) {
                       : "List"}
               </span>
               <div className="flex gap-1">
-                <button type="button" onClick={() => moveBlock(index, -1)} className="px-2 py-1 text-white/40 hover:text-white text-xs">↑</button>
-                <button type="button" onClick={() => moveBlock(index, 1)} className="px-2 py-1 text-white/40 hover:text-white text-xs">↓</button>
+                <button type="button" onClick={() => moveBlock(index, -1)} className="px-2 py-1 text-muted-foreground hover:text-foreground text-xs">↑</button>
+                <button type="button" onClick={() => moveBlock(index, 1)} className="px-2 py-1 text-muted-foreground hover:text-foreground text-xs">↓</button>
                 <button type="button" onClick={() => removeBlock(index)} className="px-2 py-1 text-red-300/70 hover:text-red-300 text-xs">Remove</button>
               </div>
             </div>
@@ -249,7 +250,7 @@ export function ContentBlocksEditor({ value = [], onChange }) {
                         const items = (block.items || []).filter((_, i) => i !== itemIndex);
                         updateBlock(index, { items });
                       }}
-                      className="px-2 text-white/40 hover:text-red-300"
+                      className="px-2 text-muted-foreground hover:text-red-300"
                     >
                       ×
                     </button>
@@ -258,7 +259,7 @@ export function ContentBlocksEditor({ value = [], onChange }) {
                 <button
                   type="button"
                   onClick={() => updateBlock(index, { items: [...(block.items || []), ""] })}
-                  className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f]"
+                  className="font-mono text-[10px] uppercase tracking-widest text-primary"
                 >
                   + Add list item
                 </button>
@@ -291,7 +292,7 @@ export function ContentBlocksEditor({ value = [], onChange }) {
               key={type}
               type="button"
               onClick={() => addBlock(type)}
-              className="rounded-full border border-white/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-white/70 hover:border-[#e8cb2f] hover:text-[#e8cb2f]"
+              className="rounded-full border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground hover:border-primary hover:text-primary transition-colors"
             >
               + {label}
             </button>
@@ -329,7 +330,7 @@ export function SkillsEditor({ value = [], onChange }) {
             <button
               type="button"
               onClick={() => onChange(value.filter((_, i) => i !== index))}
-              className="px-2 text-white/40 hover:text-red-300"
+              className="px-2 text-muted-foreground hover:text-red-300"
             >
               ×
             </button>
@@ -338,7 +339,7 @@ export function SkillsEditor({ value = [], onChange }) {
         <button
           type="button"
           onClick={() => onChange([...value, { label: "", level: 80 }])}
-          className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f]"
+          className="font-mono text-[10px] uppercase tracking-widest text-primary"
         >
           + Add skill
         </button>
@@ -378,7 +379,7 @@ export function MemberProjectsEditor({ value = [], onChange }) {
             <button
               type="button"
               onClick={() => onChange(value.filter((_, i) => i !== index))}
-              className="px-2 text-white/40 hover:text-red-300"
+              className="px-2 text-muted-foreground hover:text-red-300"
             >
               ×
             </button>
@@ -387,7 +388,7 @@ export function MemberProjectsEditor({ value = [], onChange }) {
         <button
           type="button"
           onClick={() => onChange([...value, { name: "", year: "", tag: "" }])}
-          className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f]"
+          className="font-mono text-[10px] uppercase tracking-widest text-primary"
         >
           + Add project
         </button>
@@ -399,13 +400,14 @@ export function MemberProjectsEditor({ value = [], onChange }) {
 export function AdminShell({ title, subtitle, actions, children }) {
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-end justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4 pb-6 border-b border-border/60">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-[#e8cb2f] mb-2">
-            // manage
-          </p>
-          <h1 className="font-display text-5xl">{title}</h1>
-          {subtitle && <p className="mt-2 text-white/50">{subtitle}</p>}
+          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+          {subtitle && (
+            <p className="mt-2 text-sm text-muted-foreground max-w-2xl leading-relaxed">
+              {subtitle}
+            </p>
+          )}
         </div>
         {actions}
       </div>
@@ -414,21 +416,26 @@ export function AdminShell({ title, subtitle, actions, children }) {
   );
 }
 
+export function AdminTable({ children }) {
+  return (
+    <div className="rounded-2xl border border-border overflow-hidden bg-card/30">
+      {children}
+    </div>
+  );
+}
+
+export const tableHeadClass =
+  "bg-secondary/40 font-mono text-[10px] uppercase tracking-widest text-muted-foreground";
+
+export const tableRowClass = "border-t border-border/70";
+
 export function RowActions({ onEdit, onDelete }) {
   return (
-    <div className="flex gap-2">
-      <button
-        type="button"
-        onClick={onEdit}
-        className="rounded-md border border-white/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest hover:border-[#e8cb2f]"
-      >
+    <div className="flex flex-wrap gap-2">
+      <button type="button" onClick={onEdit} className={btnSecondary}>
         Edit
       </button>
-      <button
-        type="button"
-        onClick={onDelete}
-        className="rounded-md border border-red-400/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-red-300 hover:border-red-300"
-      >
+      <button type="button" onClick={onDelete} className={btnDanger}>
         Delete
       </button>
     </div>
@@ -437,35 +444,27 @@ export function RowActions({ onEdit, onDelete }) {
 
 export function Modal({ title, onClose, children, onSubmit, saving }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-[2px] p-4 sm:p-6">
       <form
         onSubmit={onSubmit}
-        className="admin-scroll w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#12100e] p-6 space-y-5"
+        className="admin-scroll relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-border bg-card p-6 sm:p-8 space-y-5 shadow-2xl"
       >
-        <div className="flex items-start justify-between gap-4 sticky top-0 bg-[#12100e] pb-2 z-10">
-          <h2 className="font-display text-3xl">{title}</h2>
+        <div className="flex items-start justify-between gap-4 sticky top-0 bg-card pb-2 z-10">
+          <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white"
+            className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground min-h-11 px-2"
           >
             Close
           </button>
         </div>
         {children}
-        <div className="flex justify-end gap-3 pt-2 sticky bottom-0 bg-[#12100e]">
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-lg border border-white/15 px-4 py-2 font-mono text-[11px] uppercase tracking-widest"
-          >
+        <div className="flex justify-end gap-3 pt-2 sticky bottom-0 bg-card border-t border-border/60 -mx-6 sm:-mx-8 px-6 sm:px-8 py-4">
+          <button type="button" onClick={onClose} className={btnSecondary}>
             Cancel
           </button>
-          <button
-            type="submit"
-            disabled={saving}
-            className="rounded-lg bg-[#e8cb2f] text-[#111110] px-4 py-2 font-mono text-[11px] uppercase tracking-widest font-semibold disabled:opacity-50"
-          >
+          <button type="submit" disabled={saving} className={btnPrimary}>
             {saving ? "Saving…" : "Save"}
           </button>
         </div>

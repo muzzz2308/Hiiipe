@@ -5,7 +5,7 @@ import SectionLabel from "../ui/SectionLabel";
 import { Link } from "react-router-dom";
 import { TeamSkeleton } from "../ui/skeletons";
 
-export default function Team() {
+export default function Team({ fullPage = false }) {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,9 +29,17 @@ export default function Team() {
             behind the <span className="text-primary">madness.</span>
           </h2>
           <p className="max-w-md text-muted-foreground text-lg">
-            Six people. One shared allergy to boring work. We hire for taste,
-            then sharpen the tools together.
+            Marketers, engineers, and builders — one team across Lahore &
+            London, allergic to boring work.
           </p>
+          {!fullPage && (
+            <Link
+              to="/team"
+              className="font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+            >
+              Meet the full team →
+            </Link>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden border border-border">
           {team.map((m) => (

@@ -17,11 +17,9 @@ export default function About() {
           </div>
           <div className="col-span-12 lg:col-span-4 lg:pt-6 space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              HIIIPE is a digital marketing agency that helps small
-              businesses and startups grow online fast. From SEO and social
-              media to Meta Ads and web design, we handle your entire digital
-              presence so you can focus on running your business. We don't do
-              fluff. We do results.
+              HIIIPE is a digital agency for marketing, software, and AI — helping
+              small businesses and startups grow online with SEO, Meta Ads, custom
+              builds, and automation. No fluff. Results.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               No decks. No filler. Just work you'll be caught staring at.

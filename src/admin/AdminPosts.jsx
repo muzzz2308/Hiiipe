@@ -5,6 +5,8 @@ import { useConfirm } from "../components/ui/ConfirmDialog";
 import { AdminTableSkeleton } from "../components/ui/skeletons";
 import {
   AdminShell,
+  AdminTable,
+  btnPrimary,
   ContentBlocksEditor,
   Field,
   ImageUpload,
@@ -13,6 +15,8 @@ import {
   TagInput,
   inputClass,
   slugify,
+  tableHeadClass,
+  tableRowClass,
   textareaClass,
 } from "./ui";
 
@@ -137,11 +141,7 @@ export default function AdminPosts() {
       title="Posts"
       subtitle="Journal entries shown on Field Notes and the archive."
       actions={
-        <button
-          type="button"
-          onClick={openCreate}
-          className="rounded-lg bg-[#e8cb2f] text-[#111110] px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest font-semibold"
-        >
+        <button type="button" onClick={openCreate} className={btnPrimary}>
           New post
         </button>
       }
@@ -149,9 +149,9 @@ export default function AdminPosts() {
       {loading ? (
         <AdminTableSkeleton />
       ) : (
-        <div className="rounded-xl border border-white/10 overflow-hidden">
+        <AdminTable>
           <table className="w-full text-left text-sm">
-            <thead className="bg-white/5 font-mono text-[10px] uppercase tracking-widest text-white/40">
+            <thead className={tableHeadClass}>
               <tr>
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3 hidden md:table-cell">Cat</th>
@@ -161,26 +161,26 @@ export default function AdminPosts() {
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.id} className="border-t border-white/10">
+                <tr key={r.id} className={tableRowClass}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       {r.img && (
                         <img
                           src={r.img}
                           alt=""
-                          className="h-12 w-16 rounded object-cover border border-white/10"
+                          className="h-12 w-16 rounded object-cover border border-border"
                         />
                       )}
                       <div>
                         <p className="font-medium">{r.title}</p>
-                        <p className="font-mono text-[10px] text-white/40">{r.slug}</p>
+                        <p className="font-mono text-[10px] text-muted-foreground">{r.slug}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 hidden md:table-cell text-white/60">
+                  <td className="px-4 py-3 hidden md:table-cell text-muted-foreground">
                     {r.cat}
                   </td>
-                  <td className="px-4 py-3 hidden sm:table-cell text-white/60">
+                  <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground">
                     {r.date}
                   </td>
                   <td className="px-4 py-3">
@@ -193,14 +193,14 @@ export default function AdminPosts() {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-4 py-10 text-center text-white/40">
+                  <td colSpan={4} className="px-4 py-10 text-center text-muted-foreground">
                     No posts yet.
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
-        </div>
+        </AdminTable>
       )}
 
       {form && (

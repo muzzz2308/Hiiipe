@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProjects } from "../../lib/api";
 import ArrowIcon from "../ui/ArrowIcon";
 import SectionLabel from "../ui/SectionLabel";
 import { WorksSkeleton } from "../ui/skeletons";
 
-export default function Works() {
+export default function Works({ fullPage = false }) {
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,23 +28,26 @@ export default function Works() {
   return (
     <section id="work" className="relative py-32 px-6 md:px-10">
       <div className="mx-auto max-w-[1600px]">
-        <SectionLabel index="04" label="Selected Work" />
+        {!fullPage && <SectionLabel index="04" label="Selected Work" />}
+        {!fullPage && (
         <div className="mt-10 flex flex-wrap items-end justify-between gap-6 mb-12">
           <h2 className="font-display text-6xl md:text-8xl">
             Recent
             <br />
             Masterpieces
           </h2>
-          <a
-            href="#"
+          <Link
+            to="/work"
             className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest"
           >
             View all archive
             <span className="w-8 h-8 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-colors">
               <ArrowIcon />
             </span>
-          </a>
+          </Link>
         </div>
+        )}
+        {fullPage && <div className="mb-12" />}
         <div className="grid grid-cols-12 gap-4 md:gap-6">
           {works.map((w, i) => (
             <a
@@ -51,7 +55,7 @@ export default function Works() {
               target={w.url ? "_blank" : undefined}
               rel={w.url ? "noopener noreferrer" : undefined}
               key={w.id || i}
-              className={`group relative ${spans[i % spans.length]} h-[105 md:h-135 block rounded-2xl overflow-hidden border border-border`}
+              className={`group relative ${spans[i % spans.length]} h-[280px] md:h-[340px] block rounded-2xl overflow-hidden border border-border`}
             >
               <img
                 src={w.img}

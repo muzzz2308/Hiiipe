@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPosts } from "../lib/api";
+import SiteLayout from "../components/layout/SiteLayout";
 import { ArchiveSkeleton } from "../components/ui/skeletons";
 
 export default function JournalArch() {
@@ -32,43 +33,19 @@ export default function JournalArch() {
     () => ["All", ...Array.from(new Set(posts.map((p) => p.cat)))],
     [posts],
   );
-  useEffect(() => {
-    document.title = "Journal Archive — hiiipe";
-
-    const description =
-      "Every dispatch from the hiiipe studio. Essays on design, craft, hiring and the operating system behind the work.";
-
-    const setMeta = (selector, attribute, value) => {
-      let tag = document.head.querySelector(selector);
-
-      if (!tag) {
-        tag = document.createElement("meta");
-        tag.setAttribute(attribute, selector.match(/"(.*)"/)[1]);
-        document.head.appendChild(tag);
-      }
-
-      tag.setAttribute("content", value);
-    };
-
-    setMeta('meta[name="description"]', "name", description);
-    setMeta(
-      'meta[property="og:title"]',
-      "property",
-      "Journal Archive — hiiipe",
-    );
-    setMeta('meta[property="og:description"]', "property", description);
-    setMeta('meta[property="og:type"]', "property", "website");
-    setMeta('meta[name="twitter:card"]', "name", "summary_large_image");
-  }, []);
 
   if (loading) return <ArchiveSkeleton />;
 
   return (
-    // <div>
-    //   {/* Your Journal Archive UI */}
-    //   <h1>Journal Archive</h1>
-    // </div>
-    <main className="min-h-screen bg-background text-foreground">
+    <SiteLayout
+      seo={{
+        title: "Journal",
+        path: "/journals",
+        description:
+          "Insights on digital marketing, SEO, AI automation, and software from the HIIIPE studio.",
+      }}
+    >
+    <div className="pt-24">
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/70 border-b border-border">
         <div className="mx-auto max-w-[1600px] px-6 md:px-10 py-5 flex items-center justify-between">
@@ -213,7 +190,8 @@ export default function JournalArch() {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
+    </SiteLayout>
   );
 }
 

@@ -1,55 +1,96 @@
-import Hero from "../components/sections/Hero";
-import Banner from "../components/sections/Banner";
-import About from "../components/sections/About";
-import Services from "../components/sections/Services.jsx";
-import Works from "../components/sections/Works.jsx";
-import Stats from "../components/sections/Stats.jsx";
-import Process from "../components/sections/Process";
-import Journal from "../components/sections/Journel.jsx";
-import Team from "../components/sections/Team.jsx";
-import CTA from "../components/sections/CTA.jsx";
+import { lazy, Suspense } from "react";
 
-import Footer from "../components/layout/Footer.jsx";
-import Navbar from "../components/layout/Navbar.jsx";
-import { useEffect, useState } from "react";
-import Testimonial from "../components/sections/Testimonial.jsx";
+import Hero from "../components/sections/Hero";
+
+import SiteLayout from "../components/layout/SiteLayout.jsx";
+
+import {
+
+  organizationSchema,
+
+  localBusinessSchema,
+
+} from "../lib/seo";
+
+
+
+const Banner = lazy(() => import("../components/sections/Banner"));
+
+const About = lazy(() => import("../components/sections/About"));
+
+const Services = lazy(() => import("../components/sections/Services.jsx"));
+
+const Works = lazy(() => import("../components/sections/Works.jsx"));
+
+const Stats = lazy(() => import("../components/sections/Stats.jsx"));
+
+const Process = lazy(() => import("../components/sections/Process"));
+
+const Journal = lazy(() => import("../components/sections/Journel.jsx"));
+
+const Team = lazy(() => import("../components/sections/Team.jsx"));
+
+const Testimonial = lazy(() => import("../components/sections/Testimonial.jsx"));
+
+const CTA = lazy(() => import("../components/sections/CTA.jsx"));
+
+
 
 export default function HomePage() {
-  const [time, setTime] = useState("");
-
-  useEffect(() => {
-    const update = () => {
-      const d = new Date();
-      const h = d.toLocaleTimeString("en-US", {
-        hour12: false,
-        timeZone: "UTC",
-      });
-
-      setTime(`${h} UTC`);
-    };
-
-    update();
-
-    const interval = setInterval(update, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
-      <Navbar />
+
+    <SiteLayout
+
+      seo={{
+
+        path: "/",
+
+        description:
+
+          "HIIIPE — digital marketing, custom software, and AI automation for ambitious brands in Lahore & London. SEO, Meta Ads, web apps, and intelligent systems.",
+
+        schema: {
+
+          "@context": "https://schema.org",
+
+          "@graph": [organizationSchema(), localBusinessSchema()],
+
+        },
+
+      }}
+
+    >
+
       <Hero />
-      <Banner />
-      <About />
-      <Services />
-      <Works />
-      <Stats />
-      <Process />
-      <Journal />
-      <Team />
-      <Testimonial />
-      <CTA />
-      <Footer time={time} />
-    </div>
+
+      <Suspense fallback={null}>
+
+        <Banner />
+
+        <About />
+
+        <Services />
+
+        <Works />
+
+        <Stats />
+
+        <Process />
+
+        <Journal />
+
+        <Team />
+
+        <Testimonial />
+
+        <CTA />
+
+      </Suspense>
+
+    </SiteLayout>
+
   );
+
 }
+

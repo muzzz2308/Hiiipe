@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ArrowIcon from "../ui/ArrowIcon";
 import ContactModal from "../ui/ContactModal";
 import BookCallModal from "../ui/BookCallModal";
 
-export default function CTA() {
-  const [contactOpen, setContactOpen] = useState(false);
+export default function CTA({ autoOpen = false }) {
+  const [contactOpen, setContactOpen] = useState(autoOpen);
   const [callOpen, setCallOpen] = useState(false);
 
   return (
@@ -31,20 +32,16 @@ export default function CTA() {
                 <ArrowIcon />
               </span>
             </button>
-            {/* <button
-              type="button"
-              onClick={() => setCallOpen(true)}
-              className="group inline-flex items-center gap-3 rounded-full border border-border px-7 py-4 font-semibold text-lg hover:border-primary hover:bg-secondary transition-colors"
+            <Link
+              to="/faq"
+              className="inline-flex items-center gap-3 rounded-full border border-border px-7 py-4 font-semibold text-lg hover:border-primary hover:bg-secondary transition-colors"
             >
-              <span>Book a 20-min call</span>
-              <span className="w-9 h-9 rounded-full border border-border flex items-center justify-center group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                <ArrowIcon />
-              </span>
-            </button> */}
+              Read FAQ
+            </Link>
           </div>
           <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 pt-10 border-t border-border">
             {[
-              { l: "Studio", v: "Lahore, PK" },
+              { l: "Studio", v: "Lahore & London" },
               { l: "Response", v: "< 24 hours" },
               { l: "Currency", v: "USD / EUR" },
             ].map((x) => (

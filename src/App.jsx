@@ -2,41 +2,51 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { RouteFallback } from "./components/ui/skeletons";
-import AdminLayout from "./admin/AdminLayout";
-import AdminLogin from "./admin/AdminLogin";
-import AdminDashboard from "./admin/AdminDashboard";
-import AdminPosts from "./admin/AdminPosts";
-import AdminTeam from "./admin/AdminTeam";
-import AdminTestimonials from "./admin/AdminTestimonials";
-import AdminProjects from "./admin/AdminProjects";
-import AdminReviews from "./admin/AdminReviews";
+import ScrollToTop from "./components/layout/ScrollToTop";
+
+const Home = lazy(() => import("./pages/HomePage"));
+const Services = lazy(() => import("./pages/ServicesPage"));
+const Work = lazy(() => import("./pages/WorkPage"));
+const Studio = lazy(() => import("./pages/StudioPage"));
+const TeamIndex = lazy(() => import("./pages/TeamPage"));
+const Industries = lazy(() => import("./pages/IndustriesPage"));
+const FAQ = lazy(() => import("./pages/FAQPage"));
+const Contact = lazy(() => import("./pages/ContactPage"));
+const Portfolio = lazy(() => import("./pages/TeamPortfolio"));
+const JournalDetail = lazy(() => import("./pages/PostDetails"));
+const JournalArch = lazy(() => import("./pages/JournelArch"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AdminRoutes = lazy(() => import("./admin/AdminRoutes"));
+const AppToaster = lazy(() => import("./components/ui/AppToaster"));
 
 function App() {
-  const Home = lazy(() => import("./pages/HomePage"));
-  const Portfolio = lazy(() => import("./pages/TeamPortfolio"));
-  const JournalDetail = lazy(() => import("./pages/PostDetails"));
-  const JournalArch = lazy(() => import("./pages/JournelArch"));
-  const NotFound = lazy(() => import("./pages/NotFound"));
-
   return (
-    <Suspense fallback={<RouteFallback />}>
-      <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="posts" element={<AdminPosts />} />
-          <Route path="team" element={<AdminTeam />} />
-          <Route path="testimonials" element={<AdminTestimonials />} />
-          <Route path="projects" element={<AdminProjects />} />
-          <Route path="reviews" element={<AdminReviews />} />
-        </Route>
-        <Route path="/team/:slug" element={<Portfolio />} />
-        <Route path="/journal/:slug" element={<JournalDetail />} />
-        <Route path="/journals" element={<JournalArch />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
+    <>
+      <ScrollToTop />
+      <Suspense fallback={null}>
+        <AppToaster />
+      </Suspense>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route
+            path="/admin/*"
+            element={<AdminRoutes />}
+          />
+          <Route path="/services" element={<Services />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/studio" element={<Studio />} />
+          <Route path="/team" element={<TeamIndex />} />
+          <Route path="/team/:slug" element={<Portfolio />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/journal/:slug" element={<JournalDetail />} />
+          <Route path="/journals" element={<JournalArch />} />
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </>
   );
 }
 

@@ -2,7 +2,11 @@
  * Fail Vercel builds early if required VITE_* vars are missing.
  * Local builds still work without them (static fallback).
  */
-const required = ["VITE_SUPABASE_URL", "VITE_SUPABASE_ANON_KEY"];
+const required = [
+  "VITE_SUPABASE_URL",
+  "VITE_SUPABASE_ANON_KEY",
+  "VITE_WEB3FORMS_ACCESS_KEY",
+];
 
 if (process.env.VERCEL) {
   const missing = required.filter((key) => !process.env[key]?.trim());
@@ -18,5 +22,5 @@ if (process.env.VERCEL) {
     process.exit(1);
   }
 
-  console.log("[Vercel build] Supabase env vars detected.");
+  console.log("[Vercel build] Required env vars detected.");
 }

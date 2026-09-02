@@ -94,7 +94,7 @@ export default function BookCallModal({ open, onClose }) {
           <button
             type="button"
             onClick={requestClose}
-            className="rounded-full border border-border w-10 h-10 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+            className="rounded-full border border-border min-h-11 min-w-11 h-11 w-11 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
             aria-label="Close"
           >
             ×

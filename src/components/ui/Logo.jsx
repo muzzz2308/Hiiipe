@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const HOLD_MS = 6000;
 
-export default function Logo({ to = "/", enableAdminHold = false }) {
+export default function Logo({ to = "/", enableAdminHold = false, onNavigate }) {
   const navigate = useNavigate();
   const timerRef = useRef(null);
   const startRef = useRef(null);
@@ -49,6 +49,11 @@ export default function Logo({ to = "/", enableAdminHold = false }) {
     }
   };
 
+  const handleLinkClick = (e) => {
+    onClick(e);
+    if (!e.defaultPrevented) onNavigate?.();
+  };
+
   useEffect(() => () => clearHold(), []);
 
   const mark = (
@@ -72,7 +77,7 @@ export default function Logo({ to = "/", enableAdminHold = false }) {
   }
 
   return (
-    <Link to={to} className="flex items-center gap-2" onClick={onClick}>
+    <Link to={to} className="flex items-center gap-2" aria-label="HIIIPE home" onClick={handleLinkClick}>
       {mark}
     </Link>
   );
