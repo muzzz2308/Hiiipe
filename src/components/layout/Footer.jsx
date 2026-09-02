@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../ui/Logo";
+import { SITE } from "../../lib/seo";
 
 const footerLinks = [
   { label: "Services", to: "/services" },
@@ -40,7 +41,7 @@ export default function Footer({ time }) {
               {time || "-- : -- : -- UTC"}
             </span>
             <a
-              href="https://www.instagram.com/hiiipe"
+              href={SITE.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground"
@@ -48,7 +49,7 @@ export default function Footer({ time }) {
               Instagram
             </a>
             <a
-              href="https://www.facebook.com/hiiipe"
+              href={SITE.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground"
@@ -56,12 +57,20 @@ export default function Footer({ time }) {
               Facebook
             </a>
             <a
-              href="https://www.linkedin.com/company/hiiipe"
+              href={SITE.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-foreground"
             >
               LinkedIn
+            </a>
+            <a
+              href={SITE.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground"
+            >
+              GitHub
             </a>
           </div>
         </div>

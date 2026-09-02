@@ -22,6 +22,12 @@ export const SITE = {
     "hiiipe",
   ],
   locations: ["Lahore, Pakistan", "London, UK"],
+  social: {
+    instagram: "https://www.instagram.com/hiiipe",
+    facebook: "https://www.facebook.com/hiiipe",
+    linkedin: "https://www.linkedin.com/company/hiiipe",
+    github: "https://github.com/muzzz2308/Hiiipe",
+  },
 };
 
 export const ROUTES = [
@@ -53,9 +59,10 @@ export function organizationSchema() {
     email: SITE.email,
     description: SITE.description,
     sameAs: [
-      "https://www.instagram.com/hiiipe",
-      "https://www.facebook.com/hiiipe",
-      "https://www.linkedin.com/company/hiiipe",
+      SITE.social.instagram,
+      SITE.social.facebook,
+      SITE.social.linkedin,
+      SITE.social.github,
     ],
     areaServed: SITE.locations,
     knowsAbout: [
