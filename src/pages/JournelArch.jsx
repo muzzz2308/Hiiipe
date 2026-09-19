@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPosts } from "../lib/api";
 import SiteLayout from "../components/layout/SiteLayout";
+import Logo from "../components/ui/Logo";
 import { ArchiveSkeleton } from "../components/ui/skeletons";
 
 export default function JournalArch() {
@@ -49,9 +50,7 @@ export default function JournalArch() {
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/70 border-b border-border">
         <div className="mx-auto max-w-[1600px] px-6 md:px-10 py-5 flex items-center justify-between">
-          <Link to="/" className="font-display text-2xl tracking-tight">
-            hiiipe<span className="text-primary">.</span>inc
-          </Link>
+          <Logo to="/" />
           <Link
             to="/"
             hash="journal"

@@ -4,6 +4,7 @@ export const SITE = {
   description:
     "HIIIPE is a Lahore & London agency for digital marketing, custom software, and AI automation. SEO, Meta Ads, web apps, and intelligent systems for growing brands.",
   url: "https://hiiipe.com",
+  ogImage: "/og-image.png",
   email: "info@hiiipe.com",
   locale: "en_US",
   twitter: "@hiiipe",

@@ -490,7 +490,7 @@ function Foot({ time }) {
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
           {time || "-- : -- : -- UTC"}
         </span>
-        <span>© 2026 hiiipe inc</span>
+        <span>© 2026 hiiipe</span>
       </div>
     </footer>
   );

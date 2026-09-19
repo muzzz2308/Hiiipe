@@ -76,7 +76,7 @@ export default function Footer({ time }) {
         </div>
 
         <div className="font-display text-[18vw] leading-none text-foreground/95 select-none">
-          HIIIPE
+          H<span className="text-primary">III</span>PE
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-between gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
           <span>© 2026 hiiipe — All rights reserved</span>

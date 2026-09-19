@@ -2,6 +2,7 @@ import fs from "fs";
 import posts from "../src/lib/post.js";
 import team from "../src/lib/team.js";
 import testimonials from "../src/lib/testimonials.js";
+import projects from "../src/lib/projects.js";
 
 function esc(s) {
   return String(s).replace(/'/g, "''");
@@ -42,16 +43,10 @@ testimonials.forEach((t, i) => {
 );`);
 });
 sql.push("");
-sql.push("-- Projects (masterpieces)");
-const projects = [
-  { img: "/work-1.webp", title: "Lumina Splash", cat: "Brand Identity", year: "2026" },
-  { img: "/work-2.webp", title: "Odal Papers", cat: "Print & Editorial", year: "2025" },
-  { img: "/work-3.webp", title: "Nexus Finance", cat: "Product Design", year: "2025" },
-  { img: "/hero-bg.jpg", title: "Kult Studio", cat: "Art Direction", year: "2024" },
-];
+sql.push("-- Projects (portfolio)");
 projects.forEach((p, i) => {
   sql.push(`INSERT INTO projects (title, cat, year, img, url, sort_order) VALUES (
-  '${esc(p.title)}', '${esc(p.cat)}', '${esc(p.year)}', '${esc(p.img)}', '', ${i}
+  '${esc(p.title)}', '${esc(p.cat)}', '${esc(p.year)}', '${esc(p.img)}', '${esc(p.url)}', ${i}
 );`);
 });
 

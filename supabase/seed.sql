@@ -70,16 +70,16 @@ INSERT INTO testimonials (quote, name, role, company, metric, sort_order) VALUES
   'Fast, opinionated, and dangerously good. They operate like a founding design team, not an agency.', 'Aisha Bello', 'COO', 'Northwind Labs', 'Seamless launch', 5
 );
 
--- Projects (masterpieces)
-INSERT INTO projects (title, cat, year, img, sort_order) VALUES (
-  'Lumina Splash', 'Brand Identity', '2026', '/work-1.webp', 0
+-- Projects (portfolio)
+INSERT INTO projects (title, cat, year, img, url, sort_order) VALUES (
+  'EV House', 'Web Development', '2026', '', 'https://evhouse.vercel.app/', 0
 );
-INSERT INTO projects (title, cat, year, img, sort_order) VALUES (
-  'Odal Papers', 'Print & Editorial', '2025', '/work-2.webp', 1
+INSERT INTO projects (title, cat, year, img, url, sort_order) VALUES (
+  'Tibyaan Essentials', 'E-Commerce', '2026', '', 'https://tibyaan-essentials.vercel.app/', 1
 );
-INSERT INTO projects (title, cat, year, img, sort_order) VALUES (
-  'Nexus Finance', 'Product Design', '2025', '/work-3.webp', 2
+INSERT INTO projects (title, cat, year, img, url, sort_order) VALUES (
+  'Mack House', 'Web App', '2026', '', 'https://mackhouse-app.vercel.app/', 2
 );
-INSERT INTO projects (title, cat, year, img, sort_order) VALUES (
-  'Kult Studio', 'Art Direction', '2024', '/hero-bg.jpg', 3
+INSERT INTO projects (title, cat, year, img, url, sort_order) VALUES (
+  'Scrub King', 'Brand & Web', '2025', '', 'https://www.scrubkingpakistan.com/', 3
 );

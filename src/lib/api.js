@@ -2,13 +2,7 @@ import { isSupabaseConfigured, supabase } from "./supabase";
 import staticPosts from "./post";
 import staticTeam from "./team";
 import staticTestimonials from "./testimonials";
-
-const staticProjects = [
-  { img: "/work-1.webp", title: "Lumina Splash", cat: "Brand Identity", year: "2026", url: "" },
-  { img: "/work-2.webp", title: "Odal Papers", cat: "Print & Editorial", year: "2025", url: "" },
-  { img: "/work-3.webp", title: "Nexus Finance", cat: "Product Design", year: "2025", url: "" },
-  { img: "/hero-bg.jpg", title: "Kult Studio", cat: "Art Direction", year: "2024", url: "" },
-];
+import staticProjects from "./projects";
 
 const staticHeroReviews = {
   rating: "4.9",
@@ -96,10 +90,24 @@ export async function getTestimonials() {
   return staticTestimonials;
 }
 
+function enrichProject(row) {
+  const meta = staticProjects.find(
+    (p) =>
+      p.title === row.title || (p.url && row.url && p.url === row.url),
+  );
+
+  const base = stripDbFields(row);
+  return {
+    ...base,
+    url: base.url || meta?.url || "",
+    accent: meta?.accent,
+  };
+}
+
 export async function getProjects() {
   try {
     const data = await fromTable("projects", { orderBy: "sort_order", ascending: true });
-    if (data) return data.map(stripDbFields);
+    if (data?.length) return data.map((row) => enrichProject(row));
   } catch (e) {
     console.warn("[api] getProjects failed, using static", e);
   }
